@@ -52,3 +52,36 @@ GHL_PASSWORD=<password>
 - **Credentials**: Reads from `.env` or `inputs/context/credentials.json` (JSON or flat format)
 - **Session persistence**: Stores browser session in `.ghl_assistant/storage_state.json` for reuse
 - **Plan safety**: Most actions require manual confirmation; only `update_stage_message` is marked `safe_to_auto_apply`
+
+## Browser debugging workflow
+
+```
+1. REPRODUCE: Navigate to GHL, trigger the issue
+2. INSPECT: Use debug_page_state() for console logs, URL, DOM state
+3. DIAGNOSE: Compare selectors in code vs actual DOM structure
+4. FIX: Update selectors or add fallbacks
+5. VERIFY: Run scan/plan again, confirm screenshot shows expected content
+```
+
+**Debug selectors when GHL UI changes:**
+```python
+assistant._safe_inner_text(page, [
+    ".workflow-builder-content",
+    "#workflow-builder", 
+    ".workflow-nodes-container",
+    "body"
+])
+```
+
+## Skills disponibles
+
+Ver `skills/` para flujos de trabajo estructurados:
+
+| Skill | Uso |
+|-------|-----|
+| `browser-testing-with-devtools` | Debugging de UI, análisis de DOM, screenshots |
+| `debugging-and-error-recovery` | Triage sistemático cuando fallan selectors o timeouts |
+| `planning-and-task-breakdown` | Planificar nuevas features antes de implementar |
+| `using-agent-skills` | Meta-skill para encadenar skills |
+| `incremental-implementation` | Implementar en slices pequeños, testear cada uno |
+| `test-driven-development` | Tests primero, luego implementación |

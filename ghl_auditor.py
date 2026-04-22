@@ -214,6 +214,32 @@ class GHLAssistant:
                 continue
         return ""
 
+    def debug_page_state(self, page: Any, context: str = "") -> dict[str, Any]:
+        """Captura estado debug del navegador: URL, titulo, console errors, estructura DOM."""
+        debug_info = {
+            "context": context,
+            "url": page.url,
+            "title": page.title() if page.title else "N/A",
+        }
+        try:
+            console_logs = []
+            page.on("console", lambda msg: console_logs.append(f"{msg.type}: {msg.text}"))
+            debug_info["console_messages"] = console_logs[:10]
+        except Exception:
+            debug_info["console_messages"] = []
+
+        for selector in ["body", ".workflow-builder-content", "#workflow-builder"]:
+            try:
+                if page.locator(selector).count() > 0:
+                    debug_info["main_content_length"] = len(
+                        page.locator(selector).first.inner_text()
+                    )
+                    break
+            except Exception:
+                continue
+
+        return debug_info
+
     def _detect_candidate_labels(self, text: str) -> list[str]:
         candidates: list[str] = []
         ignored_prefixes = (

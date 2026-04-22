@@ -824,6 +824,31 @@ class GHLAssistant:
             notes.append(payload)
         return notes
 
+    def search_local_api_docs(self, query: str) -> list[dict[str, Any]]:
+        """Busca en la documentación API local de GHL (docs/ghl-api/)."""
+        results: list[dict[str, Any]] = []
+        docs_dir = self.root / "docs" / "ghl-api"
+        if not docs_dir.exists():
+            return results
+        toc_path = docs_dir / "toc.json"
+        if not toc_path.exists():
+            return results
+        try:
+            toc = json.loads(toc_path.read_text(encoding="utf-8"))
+            for item in toc.get("items", []):
+                if item.get("type") != "item":
+                    continue
+                title = item.get("title", "")
+                uri = item.get("uri", "")
+                if query.lower() in title.lower():
+                    file_path = docs_dir / uri
+                    if file_path.exists():
+                        content = file_path.read_text(encoding="utf-8")[:1500]
+                        results.append({"title": title, "uri": uri, "content": content})
+        except Exception:
+            pass
+        return results[:10]
+
     def _snapshot_contains(self, snapshot: dict[str, Any] | None, text: str) -> bool:
         if not snapshot:
             return False

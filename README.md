@@ -178,13 +178,32 @@ O usa `inputs/context/credentials.json`:
                            ▼
                    ┌──────────────┐
                    │   📚 DOCS    │
-                   │ GHL Help Center│
+                   │ GHL Help Center + API Local │
                    └──────────────┘
 ```
 
 1. **Plan**: Escribe instrucciones en texto libre describiendo los cambios deseados
 2. **Audit**: Escanea el workflow actual y genera un plan detallado
 3. **Apply**: Aplica los cambios paso a paso (con confirmación manual)
+
+### Documentación API local
+
+El proyecto incluye la documentación oficial de GHL API v2 en `docs/ghl-api/`:
+
+```bash
+# Actualizar documentación
+cd docs/ghl-api && git pull
+
+# Buscar endpoint específico
+python -c "
+import json
+with open('docs/ghl-api/toc.json') as f:
+    toc = json.load(f)
+for item in toc['items']:
+    if item.get('type') == 'item' and 'contact' in item.get('title','').lower():
+        print(item['title'], '->', item['uri'])
+"
+```
 
 ---
 

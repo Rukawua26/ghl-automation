@@ -1,0 +1,66 @@
+{
+  "created_at": "2026-04-20T15:50:07",
+  "workflow_name": "Sin snapshot",
+  "snapshot_file": null,
+  "global_rules": {
+    "no_sms": true
+  },
+  "actions": [
+    {
+      "id": "A01",
+      "kind": "channel_policy",
+      "target": "global",
+      "summary": "Desactivar o evitar SMS y usar solo WhatsApp o correo.",
+      "safe_to_auto_apply": false
+    },
+    {
+      "id": "A02",
+      "kind": "remove_stage",
+      "target": "Cliente cerrado",
+      "summary": "Eliminar etapa o bloque 'Cliente cerrado'.",
+      "safe_to_auto_apply": false,
+      "found_in_snapshot": false
+    },
+    {
+      "id": "A03",
+      "kind": "remove_stage",
+      "target": "No interesados",
+      "summary": "Eliminar etapa o bloque 'No interesados'.",
+      "safe_to_auto_apply": false,
+      "found_in_snapshot": false
+    },
+    {
+      "id": "A04",
+      "kind": "update_stage_message",
+      "target": "Lead Entrante",
+      "summary": "Actualizar el mensaje principal de 'Lead Entrante'.",
+      "message": "Hola [Nombre]\nBienvenido a Dayana Marketing Ads",
+      "safe_to_auto_apply": true,
+      "found_in_snapshot": false
+    },
+    {
+      "id": "A05",
+      "kind": "update_stage_message",
+      "target": "No contesta - 1er llamado",
+      "summary": "Actualizar el mensaje principal de 'No contesta - 1er llamado'.",
+      "message": "Intentamos contactarte [Nombre]",
+      "safe_to_auto_apply": true,
+      "found_in_snapshot": false
+    },
+    {
+      "id": "A06",
+      "kind": "schedule_reminders",
+      "target": "Interesado - 2da fase con cita",
+      "summary": "Configurar recordatorios temporizados para 'Interesado - 2da fase con cita'.",
+      "reminders": {
+        "24h": "Recordatorio 24h",
+        "3h": "Recordatorio 3h",
+        "1h": "Recordatorio 1h"
+      },
+      "safe_to_auto_apply": false
+    }
+  ],
+  "warnings": [],
+  "stage_count": 3,
+  "instructions_preview": "NOTA IMPORTANTE: TODOS LOS MENSAJES SERAN POR WHATSAPP O CORREO, NO SMS\n\nTambien eliminar\nCliente cerrado\nNo interesados\n\n1 Lead Entrante\nVAMOS A CAMBIARLO A\nHola [Nombre]\nBienvenido a Dayana Marketing Ads\n\n2 No contesta - 1er llamado\nCAMBIAR A\nIntentamos contactarte [Nombre]\n\n8 Interesado - 2da fase con cita\n- 24 HORAS ANTE\nRecordatorio 24h\n\n- 3 HORAS ANTES\nRecordatorio 3h\n\n- 1 HORA ANTES\nRecordatorio 1h"
+}

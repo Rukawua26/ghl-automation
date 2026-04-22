@@ -1,0 +1,26 @@
+# Environment and credentials
+.env
+.env.local
+credentials.json
+
+# Python
+__pycache__/
+*.py[cod]
+venv/
+.venv/
+
+# GHL assistant artifacts
+.ghl_assistant/storage_state.json
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs and reports
+*.txt
+*.log
+
+# IDE
+.vscode/
+.idea/
+*.swp
